@@ -1,6 +1,8 @@
 import { createAdminClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   // Use admin client to bypass RLS for dashboard data
   const supabase = createAdminClient();
