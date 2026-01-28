@@ -78,7 +78,6 @@ const config: Config = {
           light: 'var(--tfa-border-light)',
         },
         'tfa-card': 'var(--tfa-card)',
-        'tfa-accent': 'var(--tfa-accent)',
         // Legacy dark mode aliases
         'tfa-charcoal': '#0A0F0A',
         'tfa-slate': '#141A14',

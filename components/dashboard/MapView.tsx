@@ -268,7 +268,11 @@ export function MapView({ className }: MapViewProps) {
       source.setData(geoJSON);
 
       // Fit map to bounds if we have plots
-      const bounds = calculateAllPlotsBounds(plotsWithGeometry);
+      const bounds = calculateAllPlotsBounds(
+        plotsWithGeometry.map((p) => ({
+          geometry: p.geometry || undefined,
+        }))
+      );
       if (bounds && map.current) {
         map.current.fitBounds(bounds, {
           padding: 50,
