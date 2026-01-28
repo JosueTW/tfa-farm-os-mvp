@@ -19,6 +19,9 @@ npm run db:setup
 
 # Run development server
 npm run dev
+
+# Deploy (Vercel)
+npx vercel
 ```
 
 ## 📁 Project Structure
