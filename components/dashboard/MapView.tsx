@@ -179,29 +179,36 @@ export function MapView({ className }: MapViewProps) {
         if (!e.features || e.features.length === 0) return;
 
         const feature = e.features[0];
-        const props = feature?.properties;
+        const props = feature?.properties as Record<string, unknown> | null;
 
         if (!props) return;
 
+        // Extract values with safe type handling
+        const plotCode = String(props.plotCode || 'Unknown Plot');
+        const plotName = props.plotName ? String(props.plotName) : null;
+        const status = String(props.status || 'Unknown');
+        const areaHa = props.areaHa ? Number(props.areaHa) : null;
+        const plannedDensity = props.plannedDensity ? Number(props.plannedDensity) : null;
+
         const popupContent = `
           <div class="p-3 min-w-[200px]">
-            <h3 class="font-semibold text-base mb-2">${props.plotCode || 'Unknown Plot'}</h3>
-            ${props.plotName ? `<p class="text-sm text-gray-600 mb-2">${props.plotName}</p>` : ''}
+            <h3 class="font-semibold text-base mb-2">${plotCode}</h3>
+            ${plotName ? `<p class="text-sm text-gray-600 mb-2">${plotName}</p>` : ''}
             <div class="space-y-1 text-sm">
               <div class="flex justify-between">
                 <span class="text-gray-600">Status:</span>
-                <span class="font-medium capitalize">${props.status || 'Unknown'}</span>
+                <span class="font-medium capitalize">${status}</span>
               </div>
-              ${props.areaHa ? `
+              ${areaHa ? `
                 <div class="flex justify-between">
                   <span class="text-gray-600">Area:</span>
-                  <span class="font-medium">${Number(props.areaHa).toFixed(2)} ha</span>
+                  <span class="font-medium">${areaHa.toFixed(2)} ha</span>
                 </div>
               ` : ''}
-              ${props.plannedDensity ? `
+              ${plannedDensity ? `
                 <div class="flex justify-between">
                   <span class="text-gray-600">Target Density:</span>
-                  <span class="font-medium">${props.plannedDensity.toLocaleString()}/ha</span>
+                  <span class="font-medium">${plannedDensity.toLocaleString()}/ha</span>
                 </div>
               ` : ''}
             </div>
