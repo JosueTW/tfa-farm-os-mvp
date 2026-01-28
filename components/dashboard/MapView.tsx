@@ -179,7 +179,9 @@ export function MapView({ className }: MapViewProps) {
         if (!e.features || e.features.length === 0) return;
 
         const feature = e.features[0];
-        const props = feature.properties;
+        const props = feature?.properties;
+
+        if (!props) return;
 
         const popupContent = `
           <div class="p-3 min-w-[200px]">
@@ -193,7 +195,7 @@ export function MapView({ className }: MapViewProps) {
               ${props.areaHa ? `
                 <div class="flex justify-between">
                   <span class="text-gray-600">Area:</span>
-                  <span class="font-medium">${props.areaHa.toFixed(2)} ha</span>
+                  <span class="font-medium">${Number(props.areaHa).toFixed(2)} ha</span>
                 </div>
               ` : ''}
               ${props.plannedDensity ? `
