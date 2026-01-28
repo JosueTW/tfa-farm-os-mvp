@@ -1,12 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createAdminClient } from '@/lib/supabase/server';
+import { createAdminClient, createClient } from '@/lib/supabase/server';
 
 export const dynamic = 'force-dynamic';
 
 // GET /api/dashboard/metrics - Get detailed KPI calculations
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createAdminClient();
+    let supabase;
+    try {
+      supabase = createAdminClient();
+    } catch (error) {
+      console.warn('Admin client unavailable, using anon client');
+      supabase = createClient();
+    }
     const { searchParams } = new URL(request.url);
 
     const startDate = searchParams.get('start_date');

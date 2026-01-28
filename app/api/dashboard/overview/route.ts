@@ -1,11 +1,17 @@
-import { createAdminClient } from '@/lib/supabase/server';
+import { createAdminClient, createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  // Use admin client to bypass RLS for dashboard data
-  const supabase = createAdminClient();
+  // Prefer admin client, but fallback to anon if env is missing
+  let supabase;
+  try {
+    supabase = createAdminClient();
+  } catch (error) {
+    console.warn('Admin client unavailable, using anon client');
+    supabase = createClient();
+  }
 
   try {
     // Fetch recent activities (all types, ordered by date)
