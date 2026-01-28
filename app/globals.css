@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Mapbox GL CSS */
+@import 'mapbox-gl/dist/mapbox-gl.css';
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 142 38% 36%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 199 95% 23%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 178 96% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 178 96% 45%;
+    --radius: 0.5rem;
+
+    /* TFA Theme Colors - Light Mode */
+    --tfa-bg-primary: #F8FAF8;
+    --tfa-bg-secondary: #FFFFFF;
+    --tfa-bg-tertiary: #F0F4F0;
+    --tfa-bg-elevated: #FFFFFF;
+    --tfa-text-primary: #1A1A1A;
+    --tfa-text-secondary: #4A4A4A;
+    --tfa-text-muted: #6A7A6A;
+    --tfa-border: #E0E8E0;
+    --tfa-border-light: #D0D8D0;
+    --tfa-card: #FFFFFF;
+    --tfa-accent: #01E3C2;
+  }
+
+  .dark {
+    --background: 120 20% 4%;
+    --foreground: 0 0% 100%;
+    --card: 120 15% 8%;
+    --card-foreground: 0 0% 100%;
+    --popover: 120 15% 8%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 142 38% 36%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 199 95% 23%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 120 10% 12%;
+    --muted-foreground: 120 5% 60%;
+    --accent: 178 96% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 55.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 120 10% 16%;
+    --input: 120 10% 16%;
+    --ring: 178 96% 45%;
+
+    /* TFA Theme Colors - Dark Mode */
+    --tfa-bg-primary: #0A0F0A;
+    --tfa-bg-secondary: #141A14;
+    --tfa-bg-tertiary: #1E261E;
+    --tfa-bg-elevated: #283028;
+    --tfa-text-primary: #FFFFFF;
+    --tfa-text-secondary: #C8D0C8;
+    --tfa-text-muted: #9AA89A;
+    --tfa-border: #2A352A;
+    --tfa-border-light: #3A453A;
+    --tfa-card: #141A14;
+    --tfa-accent: #01E3C2;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Mapbox popup theming for contrast */
+.mapboxgl-popup-content {
+  background: var(--tfa-bg-secondary);
+  color: var(--tfa-text-primary);
+}
+
+.mapboxgl-popup-content h3 {
+  color: var(--tfa-text-primary);
+}
+
+.mapboxgl-popup-content p {
+  color: var(--tfa-text-secondary);
+}
