@@ -3,12 +3,6 @@ import { createClient } from '@/lib/supabase/server';
 import { processMessage } from '@/lib/ai/claude';
 import twilio from 'twilio';
 
-// Twilio client for sending responses
-const twilioClient = twilio(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
-);
-
 // POST /api/webhooks/whatsapp - Handle incoming WhatsApp messages
 export async function POST(request: NextRequest) {
   try {
@@ -166,14 +160,25 @@ export async function POST(request: NextRequest) {
         )}%`
       : '✅ Message received. Please include activity details like: "Planted 400 cladodes in Plot 2A with 6 workers"';
 
-    try {
-      await twilioClient.messages.create({
-        from: process.env.TWILIO_WHATSAPP_NUMBER,
-        to: from,
-        body: responseMessage,
-      });
-    } catch (twilioError) {
-      console.error('Error sending WhatsApp response:', twilioError);
+    const twilioAccountSid = process.env.TWILIO_ACCOUNT_SID;
+    const twilioAuthToken = process.env.TWILIO_AUTH_TOKEN;
+    const twilioWhatsappNumber = process.env.TWILIO_WHATSAPP_NUMBER;
+
+    if (twilioAccountSid && twilioAuthToken && twilioWhatsappNumber) {
+      try {
+        const twilioClient = twilio(twilioAccountSid, twilioAuthToken);
+        await twilioClient.messages.create({
+          from: twilioWhatsappNumber,
+          to: from,
+          body: responseMessage,
+        });
+      } catch (twilioError) {
+        console.error('Error sending WhatsApp response:', twilioError);
+      }
+    } else {
+      console.warn(
+        'Twilio env vars missing. Skipping WhatsApp response send.'
+      );
     }
 
     // Return TwiML response
